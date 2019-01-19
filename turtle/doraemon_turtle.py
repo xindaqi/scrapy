@@ -1,4 +1,5 @@
 from turtle import *
+import time
 
 
 def flower():
@@ -21,10 +22,26 @@ def triangle():
 
 
 class Doraemon(object):
+	# 画笔移动,避免移动绘制轨迹
+	# pu抬笔,goto移动,pd落笔
 	def my_goto(self, x, y):
 		penup()
 		goto(x, y)
 		pendown()
+	# 转角,向前
+	def seth_fd(self, a, b):
+		seth(a)
+		fd(b)
+	# 转角,画圆
+	def seth_circle(self, a, b, c):
+		seth(a)
+		circle(b, c)
+
+	def circle_fd(self, a, b, c):
+		circle(a, b)
+		fd(c)
+
+	# 眼睛	
 	def eyes(self):
 		tracer(False)
 		a = 2.5
@@ -38,52 +55,39 @@ class Doraemon(object):
 				lt(3)
 				fd(a)
 		tracer(True)
+
+
+
+	# 胡须位置
+	def beard_draw(self, a, b, c, d):
+		self.my_goto(a, b)
+		self.seth_fd(c, d)
+
+
+	# 胡须
 	def beard(self):
-		self.my_goto(-37, 135)
-		seth(165)
-		fd(60)
+		self.beard_draw(-37, 135, 165, 60)
+		self.beard_draw(-37, 125, 180, 60)
+		self.beard_draw(-37, 115, 193, 60)
+		self.beard_draw(37, 135, 15, 60)
+		self.beard_draw(37, 125, 0, 60)
+		self.beard_draw(37, 115, -13, 60)
 
-		self.my_goto(-37, 125)
-		seth(180)
-		fd(60)
-
-		self.my_goto(-37, 115)
-		seth(193)
-		fd(60)
-
-		self.my_goto(37, 135)
-		seth(15)
-		fd(60)
-
-		self.my_goto(37, 125)
-		seth(0)
-		fd(60)
-
-		self.my_goto(37, 115)
-		seth(-13)
-		fd(60)
-
+	# 嘴
 	def mouth(self):
-		self.my_goto(5, 148)
-		seth(270)
-		fd(100)
-		seth(0)
-		circle(120, 50)
-		seth(230)
-		circle(-120, 100)
+		self.beard_draw(5, 148, 270, 100)
+		self.seth_circle(0, 120, 50)
+		self.seth_circle(230, -120, 100)
 
+	# 围巾
 	def scarf(self):
 		
 		fillcolor('#e70010')
 		begin_fill()
-		seth(0)
-		fd(200)
-		circle(-5, 90)
-		fd(10)
-		circle(-5, 90)
-		fd(207)
-		circle(-5, 90)
-		fd(10)
+		self.seth_fd(0, 200)
+		self.circle_fd(-5, 90, 10)
+		self.circle_fd(-5, 90, 207)
+		self.circle_fd(-5, 90, 10)
 		circle(-5, 90)
 		end_fill()
 
@@ -104,8 +108,7 @@ class Doraemon(object):
 
 		pensize(6)
 		self.my_goto(20, 205)
-		seth(75)
-		circle(-10, 150)
+		self.seth_circle(75, -10, 150)
 		pensize(3)
 
 		self.my_goto(-17, 200)
@@ -129,6 +132,7 @@ class Doraemon(object):
 		penup()
 		fd(60)
 		pendown()
+
 		seth(90)
 		self.eyes()
 		penup()
@@ -158,49 +162,30 @@ class Doraemon(object):
 		penup()
 		circle(150, 50)
 		pendown()
-		seth(30)
-		fd(40)
-		seth(70)
-		circle(-30, 270)
+		self.seth_fd(30, 40)
+		self.seth_circle(70, -30, 270)
 
 		fillcolor('#00a0de')
 		begin_fill()
 
-		seth(230)
-		fd(80)
-		seth(90)
-		circle(1000, 1)
-		seth(-89)
-		circle(-1000, 10)
-
-		seth(180)
-		fd(70)
-		seth(90)
-		circle(30, 180)
-		seth(180)
-		fd(70)
-
-		seth(100)
-		circle(-1000, 9)
-
-		seth(-86)
-		circle(1000, 2)
-		seth(230)
-		fd(40)
-
+		self.seth_fd(230, 80)
+		self.seth_circle(90, 1000, 1)
+		self.seth_circle(-89, -1000, 10)
+		self.seth_fd(180, 70)
+		self.seth_circle(90, 30, 180)
+		self.seth_fd(180, 70)
+		self.seth_circle(100, -1000, 9)
+		self.seth_circle(-86, 1000, 2)
+		self.seth_fd(230, 40)
+		
 		circle(-30, 230)
-		seth(45)
-		fd(81)
-		seth(0)
-		fd(203)
-		circle(5, 90)
-		fd(10)
-		circle(5, 90)
-		fd(7)
-		seth(40)
-		circle(150, 10)
-		seth(30)
-		fd(40)
+		self.seth_fd(45, 81)
+		self.seth_fd(0, 203)
+
+		self.circle_fd(5, 90, 10)
+		self.circle_fd(5, 90, 7)
+		self.seth_circle(40, 150, 10)
+		self.seth_fd(30, 40)
 		end_fill()
 
 		# left hand
@@ -216,16 +201,15 @@ class Doraemon(object):
 		fillcolor('#ffffff')
 		begin_fill()
 		fd(15)
-		circle(-15, 180)
-		fd(90)
-		circle(-15, 180)
-		fd(10)
+		self.circle_fd(-15, 180, 90)
+		self.circle_fd(-15, 180, 10)
 		end_fill()
 
 		self.my_goto(-96.26, -182.59)
 		seth(180)
 		fillcolor('#ffffff')
 		begin_fill()
+
 		fd(15)
 		circle(15, 180)
 		fd(90)
@@ -243,20 +227,17 @@ class Doraemon(object):
 
 		# bag
 		self.my_goto(-103.42, 15.09)
-		seth(0)
-		fd(38)
+		self.seth_fd(0, 38)
 		seth(230)
 		begin_fill()
 		circle(90, 260)
 		end_fill()
 
 		self.my_goto(5, -40)
-		seth(0)
-		fd(70)
-		seth(-90)
-		circle(-70, 180)
-		seth(0)
-		fd(70)
+		self.seth_fd(0, 70)
+		self.seth_circle(-90, -70, 180)
+		self.seth_fd(0, 70)
+		
 
 		# ding
 		self.my_goto(-103.42, 15.09)
@@ -291,13 +272,18 @@ class Doraemon(object):
 
 
 if __name__ == "__main__":
-	screensize(800, 600, '#f0f0f0')
+	# screensize(800, 600, '#f0f0f0')
+	setup(650, 700)
 	pensize(3)
 	speed(9)
+	time.sleep(4)
 
 	d_e = Doraemon()
 	d_e.haha()
-	d_e.my_goto(100, -300)
+	d_e.my_goto(200, -300)
+	color((0, 0, 0))
+
+	write("xindaqi", font=(15))
 	mainloop()
 
 	# triangle()
